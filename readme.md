@@ -9,3 +9,4 @@
 
 
 #  前端编译gitHub
+[soul-explore-front](https://github.com/Relsoul/soul-explore-front)
