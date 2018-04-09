@@ -1,5 +1,9 @@
 <?php
 
+class MainControl{
+
+}
+
 class Auth{
     public  function authThemeOptions(){
         // Restrict endpoint to only users who have the edit_posts capability.

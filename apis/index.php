@@ -28,6 +28,42 @@ class Index{
         ) );*/
     }
 
+    /**
+     * @param $arr  所有的nav导航list
+     * @param $id   需要找到对应的id
+     * @return array
+     */
+    private function findAndDelete(&$arr,$id){
+        $b=[];
+        foreach($arr as $i=>$value){
+            if($value->menu_item_parent == $id){
+                array_push($b,$arr[$i]);
+                unset($arr[$i]);
+            }
+        }
+        return $b;
+    }
+
+    /**
+     * 构建导航
+     * @param $res          所有的nav导航list
+     * @param $hash      承载导航的hash表
+     */
+    private function buildNav(&$res,&$hash){
+        //组装导航
+        foreach($hash as $i =>$value){
+            $id = $value->ID;
+
+            $b =$this->findAndDelete($res,$id);
+            $value->sub= $b;
+
+            // 是否有子目录
+            if(count($b)>0){
+                $this->buildNav($res,$value->sub);
+            }
+        }
+    }
+
     public function getNav($request){
         $menu_name = 'main-menu';   // 获取主导航位置
         $locations = get_nav_menu_locations();
@@ -36,46 +72,10 @@ class Index{
         $res = wp_get_nav_menu_items($menu->term_id);
 
         // 组装嵌套的导航,
-        $hash = array();
-        foreach( $res as $i  => $menu_item ) {
-            // 组建顶级hash
-            if($menu_item->menu_item_parent==0){
-                $menu_item->sub = [];
-                array_push($hash,$menu_item);
-                unset($res[$i]);
-            }
-        }
+        $hash = $this->findAndDelete($res,0);
 
-        function findAndDelete(&$arr,$id){
-            $b=[];
-            foreach($arr as $i=>$value){
-                if($value->menu_item_parent == $id){
-                    array_push($b,$arr[$i]);
-                    unset($arr[$i]);
-                }
-            }
-            return $b;
-        }
+        $this->buildNav($res,$hash);
 
-        //组装二级导航
-        foreach($hash as $i =>$value){
-            $id = $value->ID;
-
-            $b =findAndDelete($res,$id);
-            $value->sub= $b;
-
-            // 剩下的为三级导航或者四级等. 但是这里只处理三级导航其他的一律按一级处理...循环递归太麻烦了
-            if(count($b)>0){
-                foreach ($b as $subIndex=>$subValue){
-                    $c = findAndDelete($res,$subValue->ID);
-                    $subValue->sub=$c;
-                }
-            }
-        }
-        
-        //var_dump($tmpInfo);
-
-        // Return all of our comment response data.
         return rest_ensure_response( $hash );
     }
 }

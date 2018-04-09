@@ -12,23 +12,9 @@
     ?>
 
     <?php
-        $res = get_terms( array(
-            'taxonomy' => 'nav_menu',
-            'hide_empty' => false,
-        ) );
-
-        $menu_name = 'main-menu';
-        $locations = get_nav_menu_locations();
-        $menu_id = $locations[ $menu_name ] ;
-        $res = wp_get_nav_menu_object($menu_id);
-        $res = wp_get_nav_menu_items($res->term_id);
-//        $res = wp_nav_menu(array(
-//            theme_location=>'main-menu',
-//            'echo'=> false
-//        ));
-    echo "<pre>";
-    print_r($res);
-    echo "</pre>";
+//    echo "<pre>";
+//    print_r($res);
+//    echo "</pre>";
 
 
     ?>
