@@ -36,18 +36,21 @@ class Untils{
         $time = time();
         $time = $time * 1000;
 
-        //初始化
-        $curl = curl_init(); // 启动一个CURL会话
-        curl_setopt($curl, CURLOPT_URL, "https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&nc=$time");
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);  // 从证书中检查SSL加密算法是否存在
-        $tmpInfo = curl_exec($curl);     //返回api的json对象
-        //关闭URL请求
-        curl_close($curl);
+        //        //初始化
+        //        $curl = curl_init(); // 启动一个CURL会话
+        //        curl_setopt($curl, CURLOPT_URL, "https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&nc=$time");
+        //        curl_setopt($curl, CURLOPT_HEADER, 0);
+        //        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        //        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
+        //        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);  // 从证书中检查SSL加密算法是否存在
+        //        $tmpInfo = curl_exec($curl);     //返回api的json对象
+        //        //关闭URL请求
+        //        curl_close($curl);
+        //
+        //        $tmpInfo = json_decode($tmpInfo);
 
-        $tmpInfo = json_decode($tmpInfo);
+        $res = wp_remote_get("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&nc=$time");
+        $tmpInfo = json_decode($res['body']);
 
         //var_dump($tmpInfo);
 

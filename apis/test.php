@@ -32,4 +32,9 @@
     }
 
     add_action( 'rest_api_init', 'prefix_register_example_routes' );
+
+    /**
+     *      test
+     */
+
 ?>

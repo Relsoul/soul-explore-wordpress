@@ -42,8 +42,26 @@ class Auth{
 /**
  * 注册导航
  */
-
 register_nav_menu( 'main-menu', '主导航' );
+
+/**
+ *  主题支持
+ */
+
+//  特色图片
+add_theme_support( 'post-thumbnails' );
+set_post_thumbnail_size( 825, 510, true );
+
+// 编辑标签
+add_theme_support( 'post-formats', array(
+    'aside', 'image', 'video', 'quote', 'link', 'gallery', 'status', 'audio', 'chat'
+) );
+
+/**
+ *  pre wp-api
+ */
+include_once (get_template_directory()."./pre-api/post.php");
+new prePost();
 
 include_once (get_template_directory()."./apis/test.php");
 include_once (get_template_directory()."./apis/untils.php");
