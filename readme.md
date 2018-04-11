@@ -7,6 +7,12 @@
 define('JWT_AUTH_SECRET_KEY', '您的密钥,请重写');
 ```
 
+-   推荐使用php7.2 速度比php5.6快上4倍不止
+-   如果感觉缓慢,请在wp-config.php设置define('DB_HOST', '127.0.0.1');
+
+# 安装
+
+
 # 项目结构
 
 采用restApi
