@@ -12,6 +12,9 @@ define('JWT_AUTH_SECRET_KEY', '您的密钥,请重写');
 
 # 安装
 
+- 安装wordpress
+- clone 主题文件 或者解压主题文件
+- 后台-设置-固定链接- 设置为 文章类型
 
 # 项目结构
 
